@@ -35,10 +35,27 @@ function addTask(e) {
 
   taskList.appendChild(li);
 
+  //store in Local
+  storeTaskInLocalStorage(taskInput.value);
+
   taskInput.value = '';
 
 
   e.preventDefault();
+}
+
+// store task
+function storeTaskInLocalStorage() {
+  let tasks;
+  if(localStorage.getItem('tasks') === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+  }
+
+  tasks.push(task);
+
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 // Remove Task

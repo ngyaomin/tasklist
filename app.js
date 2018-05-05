@@ -9,6 +9,8 @@ const taskInput = document.querySelector('#task');
 loadEventListeners();
 
 function loadEventListeners() {
+  // DOM Load event
+  document.addEventListener('DOMContentLoaded', getTasks);
   // Add Task
   form.addEventListener('submit', addTask);
   // Remove Task
@@ -17,6 +19,28 @@ function loadEventListeners() {
   clearBtn.addEventListener('click', clearTasks);
   // Filter tasks
   filter.addEventListener('keyup', filterTasks);
+}
+
+// Get Tasks from Local Storage
+function getTasks() {
+  let tasks;
+  if(localStorage.getItem('tasks') === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+  }
+
+  tasks.forEach(function(task){
+    const li = document.createElement('li');
+    li.className = 'collection-item';
+    li.appendChild(document.createTextNode(task));
+    const link = document.createElement('a');
+    link.className = 'delete-item secondary-content';
+    link.innerHTML = '<i class="fa fa-remove"></i>';
+    li.appendChild(link);
+
+    taskList.appendChild(li);
+  });
 }
 
 // Add Tasks
@@ -45,7 +69,7 @@ function addTask(e) {
 }
 
 // store task
-function storeTaskInLocalStorage() {
+function storeTaskInLocalStorage(task) {
   let tasks;
   if(localStorage.getItem('tasks') === null) {
     tasks = [];

@@ -9,7 +9,10 @@ const taskInput = document.querySelector('#task');
 loadEventListeners();
 
 function loadEventListeners() {
+  // Add Task
   form.addEventListener('submit', addTask);
+  // Remove Task
+  taskList.addEventListener('click', removeTask);
 }
 
 // Add Tasks
@@ -17,7 +20,7 @@ function addTask(e) {
   if(taskInput.value === '') {
     alert('add task');
   }
-  
+
   const li = document.createElement('li');
   li.className = 'collection-item';
   li.appendChild(document.createTextNode(taskInput.value));
@@ -25,11 +28,18 @@ function addTask(e) {
   link.className = 'delete-item secondary-content';
   link.innerHTML = '<i class="fa fa-remove"></i>';
   li.appendChild(link);
-  
+
   taskList.appendChild(li);
-  
+
   taskInput.value = '';
-  
-  
+
+
   e.preventDefault();
+}
+
+// Remove Task
+function removeTask(e) {
+  if(e.target.parentElement.classList.contains('delete-item')) {
+    e.target.parentElement.parentElement.remove();
+  }
 }
